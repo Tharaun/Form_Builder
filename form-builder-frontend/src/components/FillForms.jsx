@@ -30,7 +30,7 @@ function FillForms() {
     <div>
       {!selectedForm ? (
         <div>
-          <h2 className="font-bold mb-2">Available Formss</h2>
+          <h2 className="font-bold mb-2">Available Forms</h2>
           <ul>
             {forms.map((form) => (
               <li key={form.id} className="mb-2">
