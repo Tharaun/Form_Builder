@@ -12,7 +12,17 @@ function FillForms() {
 
   const loadForm = async (id) => {
     const res = await api.get(`/api/forms/${id}`);
-    setSelectedForm(res.data);
+    
+    // Optional: Normalize field type to `type` to keep JSX clean
+    const form = {
+      ...res.data,
+      fields: res.data.fields.map(field => ({
+        ...field,
+        type: field.field_type // normalize to `type`
+      }))
+    };
+
+    setSelectedForm(form);
     setResponses({});
   };
 
@@ -50,6 +60,7 @@ function FillForms() {
           {selectedForm.fields.map((field) => (
             <div key={field.id} className="mb-3">
               <label className="block font-medium">{field.label}</label>
+
               {field.type === "text" && (
                 <input
                   type="text"
@@ -57,26 +68,29 @@ function FillForms() {
                   onChange={(e) => handleChange(field.id, e.target.value)}
                 />
               )}
+
               {field.type === "textarea" && (
                 <textarea
                   className="border p-1 w-full"
                   onChange={(e) => handleChange(field.id, e.target.value)}
                 />
               )}
+
               {field.type === "radio" &&
-                field.options.map((opt, i) => (
+                field.options?.map((opt, i) => (
                   <div key={i}>
                     <input
                       type="radio"
-                      name={field.id}
+                      name={`field-${field.id}`}
                       value={opt}
                       onChange={() => handleChange(field.id, opt)}
                     />{" "}
                     {opt}
                   </div>
                 ))}
+
               {field.type === "checkbox" &&
-                field.options.map((opt, i) => (
+                field.options?.map((opt, i) => (
                   <div key={i}>
                     <input
                       type="checkbox"
