@@ -46,7 +46,7 @@ function FormBuilder() {
     <div className="grid grid-cols-3 gap-4">
       {/* Left panel: Field Library */}
       <div>
-        <h2 className="font-bold mb-2">Tharun Library</h2>
+        <h2 className="font-bold mb-2">Form Library</h2>
         <FieldLibrary addField={addField} />
       </div>
 
